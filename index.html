@@ -123,16 +123,23 @@ footer {
 
 .player-bar {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: 90%;
+    max-width: 900px;
+    
     background: rgba(10,10,20,0.95);
     backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    padding: 12px 25px;
+    
     z-index: 999;
 }
 
