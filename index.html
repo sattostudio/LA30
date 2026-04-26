@@ -351,17 +351,19 @@ function updateButtons(icon) {
 <script>
 async function getNowPlaying() {
     try {
-        const response = await fetch("https://radio.conectarservidor.com:8006/stream");
-        const data = await response.json();
+        const response = await fetch("https://api.allorigins.win/get?url=https://radio.conectarservidor.com:8006/status-json.xsl");
+        const dataWrapped = await response.json();
 
-        const stream = data.icestats.source;
+        const data = JSON.parse(dataWrapped.contents);
+
+        let source = data.icestats.source;
         let title = "";
 
-        if (Array.isArray(stream)) {
-            title = stream[0].title;
-        } else {
-            title = stream.title;
+        if (Array.isArray(source)) {
+            source = source[0];
         }
+
+        title = source.title || "";
 
         if (title && title.includes("-")) {
             const parts = title.split("-");
@@ -372,18 +374,16 @@ async function getNowPlaying() {
             document.getElementById("artistName").textContent = "LA 30";
         }
 
-        // también actualizar el player bar
-        document.getElementById("nowPlaying").textContent = title;
+        document.getElementById("nowPlaying").textContent = title || "En vivo 🔴";
 
     } catch (error) {
-        document.getElementById("songTitle").textContent = "En vivo 🔴";
-        document.getElementById("artistName").textContent = "LA 30";
+        console.log("Error metadata:", error);
     }
 }
 
 setInterval(getNowPlaying, 10000);
 getNowPlaying();
-</script>  
+</script> 
 
 <div class="player-bar">
     <div class="player-info">
