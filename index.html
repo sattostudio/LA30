@@ -207,6 +207,103 @@ footer {
     text-align: center;
     font-size: 18px;
 }
+
+/* GRID PRINCIPAL */
+.radio-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 20px;
+    padding: 40px;
+}
+
+/* CAJAS */
+.box {
+    background: rgba(15,23,42,0.8);
+    border-radius: 20px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.05);
+
+    box-shadow: 0 0 20px rgba(255,0,200,0.1);
+    transition: 0.3s;
+}
+
+.box:hover {
+    transform: translateY(-5px);
+}
+
+/* TITULOS INTERNOS NEON */
+.box h3 {
+    font-size: 14px;
+    color: #ff00c8;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+/* SONANDO AHORA */
+.now-content {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.cover {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* GENEROS */
+.genres-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    text-align: center;
+}
+
+.genres-grid div {
+    font-size: 14px;
+}
+
+.genres-grid span {
+    display: block;
+    margin-top: 5px;
+    color: #aaa;
+}
+
+/* PROGRAMACIÓN */
+.schedule ul {
+    list-style: none;
+    padding: 0;
+}
+
+.schedule li {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.schedule span {
+    color: #00f0ff;
+    margin-right: 10px;
+}
+
+/* FILA INFERIOR */
+.about {
+    grid-column: span 2;
+}
+
+.social {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 24px;
+}    
     
 </style>
 </head>
@@ -261,57 +358,70 @@ footer {
 
 <audio id="radio" src="https://radio.conectarservidor.com:8006/stream"></audio>
 
-<!-- SONANDO AHORA -->
-<section class="section">
-    <h2>🎧 Sonando ahora</h2>
+<section class="radio-grid">
 
-    <div class="card highlight">
-        <strong id="cardArtist">LA 30</strong><br>
-        <span id="cardTitle">En vivo 🔴</span>
+    <!-- SONANDO AHORA -->
+    <div class="box now-playing">
+        <h3>SONANDO AHORA</h3>
+
+        <div class="now-content">
+            <img src="programa.jpg" class="cover">
+
+            <div>
+                <strong id="cardArtist">LA 30</strong>
+                <p id="cardTitle">En vivo 🔴</p>
+            </div>
+        </div>
     </div>
-</section>
 
-<!-- LO QUE SUENA -->
-<section class="section">
-    <h2>🔥 Lo que suena en LA 30</h2>
+    <!-- LO QUE SUENA -->
+    <div class="box genres">
+        <h3>TU MÚSICA, TU VIBRA</h3>
 
-    <div class="cards">
-        <div class="card">Hip Hop</div>
-        <div class="card">Techno</div>
-        <div class="card">Afro / House</div>
+        <div class="genres-grid">
+            <div>🎤<span>TRAP</span></div>
+            <div>👑<span>HIP HOP</span></div>
+            <div>🔥<span>REGGAETON</span></div>
+            <div>🎧<span>TECHNO</span></div>
+            <div>🎵<span>HOUSE</span></div>
+            <div>🌍<span>AFRO</span></div>
+        </div>
     </div>
-</section>
 
-<!-- SOBRE -->
-<section class="section">
-    <h2>🧠 Sobre LA 30</h2>
+    <!-- PROGRAMACIÓN -->
+    <div class="box schedule">
+        <h3>PROGRAMACIÓN</h3>
 
-    <div class="card">
-        LA 30 es una emisora digital enfocada en música urbana y electrónica.
-        Transmitimos 24/7 conectando sonidos globales con nuevas propuestas.
+        <ul>
+            <li><span>00:00</span> Night Vibes</li>
+            <li><span>03:00</span> La 30 Urbana</li>
+            <li><span>06:00</span> Wake Up</li>
+            <li><span>09:00</span> Flow 30</li>
+            <li><span>12:00</span> After Party</li>
+        </ul>
     </div>
-</section>
 
-<!-- PROGRAMACIÓN -->
-<section class="section">
-    <h2>📅 Programación</h2>
+    <!-- SOBRE -->
+    <div class="box about">
+        <h3>SOBRE LA 30</h3>
 
-    <div class="cards">
-        <div class="card">Mañanas - Chill / Deep</div>
-        <div class="card">Tardes - Urbano</div>
-        <div class="card">Noches - Techno / House</div>
+        <p>
+        LA 30 es más que una radio, es un movimiento.
+        Conectamos culturas, sonidos y personas a través de la música.
+        </p>
     </div>
-</section>
 
-<!-- REDES -->
-<section class="section">
-    <h2>🌐 Síguenos</h2>
+    <!-- SIGUENOS -->
+    <div class="box social">
+        <h3>SÍGUENOS</h3>
 
-    <div class="cards">
-        <div class="card">Instagram</div>
-        <div class="card">YouTube</div>
-        <div class="card">SoundCloud</div>
+        <div class="social-icons">
+            <div>📸</div>
+            <div>🎵</div>
+            <div>💬</div>
+        </div>
     </div>
+
 </section>
 
 <footer>
