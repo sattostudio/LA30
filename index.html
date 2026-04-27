@@ -218,6 +218,23 @@ button:hover {
 
 .card:hover::before {
     opacity:1;
+} 
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 22px;
+    margin-top: 10px;
+}
+
+.social-icons i {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.social-icons i:hover {
+    color: #ff00c8;
+    transform: scale(1.2);
 }    
     
 </style>
@@ -291,13 +308,11 @@ button:hover {
 
 <div class="card">
 <h3>Síguenos</h3>
-<p>Instagram · TikTok · WhatsApp</p>
-</div>
-
 <div class="social-icons">
     <i class="fa-brands fa-instagram"></i>
     <i class="fa-brands fa-whatsapp"></i>
-</div>    
+</div> 
+</div>   
 
 </div>
 
@@ -312,8 +327,9 @@ button:hover {
 <p id="status">En vivo 🔴</p>
 </div>
 
-<button class="play-btn play-control" onclick="toggleRadio()">▶</button>
+<button class="play-btn play-control" onclick="toggleRadio()">
     <i class="fa-solid fa-play"></i>
+</button>
 </div>
 
 <script>
@@ -323,22 +339,22 @@ const controls = document.querySelectorAll(".play-control");
 const status = document.getElementById("status");
 const eq = document.getElementById("eq");
 
-let playing=false;
+let playing = false;
 
 function toggleRadio(){
     if(!playing){
         radio.play();
-        playing=true;
+        playing = true;
         updateUI('<i class="fa-solid fa-pause"></i>', "Reproduciendo 🔊");
     }else{
         radio.pause();
-        playing=false;
+        playing = false;
         updateUI('<i class="fa-solid fa-play"></i>', "En vivo 🔴");
     }
 }
 
-function updateUI(icon, text) {
-    controls.forEach(btn => {
+function updateUI(icon, text){
+    controls.forEach(btn=>{
         btn.innerHTML = icon;
     });
 
@@ -347,37 +363,25 @@ function updateUI(icon, text) {
     eq.querySelectorAll("span").forEach(bar=>{
         bar.style.animationPlayState = playing ? "running" : "paused";
     });
-}else{
-radio.pause();
-playing=false;
-updateUI('<i class="fa-solid fa-play"></i>', "En vivo 🔴");
-}
 }
 
-function updateUI(icon, text) {
-    controls.forEach(btn => {
-        btn.innerHTML = icon; // 👈 NO textContent
-    });
-    status.textContent = text;
-}
-
-/* METADATA (SI DISPONIBLE) */
+/* METADATA */
 async function getTrack(){
-try{
-const res=await fetch("https://radio.conectarservidor.com:8006/status-json.xsl");
-const data=await res.json();
+    try{
+        const res = await fetch("https://radio.conectarservidor.com:8006/status-json.xsl");
+        const data = await res.json();
 
-let title=data.icestats.source.title;
+        let title = data.icestats.source.title;
 
-document.getElementById("track").textContent=title;
-document.getElementById("trackCard").textContent=title;
+        document.getElementById("track").textContent = title;
+        document.getElementById("trackCard").textContent = title;
 
-}catch(e){
-document.getElementById("track").textContent="En vivo 🔴";
+    }catch(e){
+        document.getElementById("track").textContent = "En vivo 🔴";
+    }
 }
-}
 
-setInterval(getTrack,10000);
+setInterval(getTrack, 10000);
 getTrack();
 
 </script>
