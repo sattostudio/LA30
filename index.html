@@ -170,6 +170,37 @@ footer {
     color: #666;
 }
 
+.equalizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.equalizer span {
+    width: 4px;
+    height: 10px;
+    background: linear-gradient(180deg, #00f0ff, #ff00c8);
+    border-radius: 2px;
+
+    animation: equalize 1s infinite ease-in-out;
+    animation-play-state: paused;
+}
+
+/* diferentes ritmos */
+.equalizer span:nth-child(1) { animation-delay: 0s; }
+.equalizer span:nth-child(2) { animation-delay: 0.2s; }
+.equalizer span:nth-child(3) { animation-delay: 0.4s; }
+.equalizer span:nth-child(4) { animation-delay: 0.6s; }
+.equalizer span:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes equalize {
+    0% { height: 5px; }
+    50% { height: 25px; }
+    100% { height: 8px; }
+}    
+
 </style>
 </head>
 
@@ -205,6 +236,14 @@ footer {
 <strong id="artistName">LA 30</strong><br>
 <span id="songTitle">En vivo 🔴</span>
 </p>
+
+<div class="equalizer" id="equalizer">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
     </div>
 
     <button class="play-main play-control" onclick="toggleRadio()">▶</button>
@@ -245,6 +284,7 @@ footer {
 const radio = document.getElementById("radio");
 const controls = document.querySelectorAll(".play-control");
 const statusText = document.getElementById("statusText");
+const equalizer = document.getElementById("equalizer");
 
 let playing = false;
 
@@ -253,10 +293,16 @@ function toggleRadio() {
         radio.play().catch(err => console.log(err));
         playing = true;
         updateUI("⏸", "Reproduciendo 🔊");
+equalizer.querySelectorAll("span").forEach(bar => {
+    bar.style.animationPlayState = "running";
+});
     } else {
         radio.pause();
         playing = false;
-        updateUI("▶", "En vivo 🔴");
+       updateUI("▶", "En vivo 🔴");
+equalizer.querySelectorAll("span").forEach(bar => {
+    bar.style.animationPlayState = "paused";
+});
     }
 }
 
