@@ -236,6 +236,103 @@ button:hover {
     color: #ff00c8;
     transform: scale(1.2);
 }    
+
+/* PLAYER PRO */
+.pro-player{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:40px;
+padding:20px 30px;
+border-radius:20px;
+background:rgba(10,10,20,0.95);
+backdrop-filter:blur(10px);
+box-shadow:0 0 30px rgba(255,0,200,0.2);
+}
+
+/* IZQUIERDA */
+.player-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.player-left p{
+font-size:13px;
+color:#aaa;
+}
+
+/* WAVE */
+.wave{
+display:flex;
+gap:4px;
+}
+
+.wave span{
+width:3px;
+height:10px;
+background:linear-gradient(#ff00c8,#00f0ff);
+animation:wave 1s infinite;
+animation-play-state:paused;
+}
+
+@keyframes wave{
+0%{height:5px}
+50%{height:20px}
+100%{height:5px}
+}
+
+/* BOTON PRO */
+.play-pro{
+width:80px;
+height:80px;
+border-radius:50%;
+border:none;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+color:white;
+background:#0a0a14;
+box-shadow:
+0 0 0 3px transparent,
+0 0 20px rgba(255,0,200,0.5),
+0 0 40px rgba(0,240,255,0.4);
+transition:0.3s;
+}
+
+.play-pro:hover{
+transform:scale(1.1);
+box-shadow:
+0 0 0 3px #ff00c8,
+0 0 30px rgba(255,0,200,0.8);
+}
+
+/* DERECHA */
+.player-right{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+/* SLIDER */
+.volume-slider{
+appearance:none;
+width:120px;
+height:4px;
+background:#333;
+border-radius:10px;
+}
+
+.volume-slider::-webkit-slider-thumb{
+appearance:none;
+width:12px;
+height:12px;
+background:#ff00c8;
+border-radius:50%;
+cursor:pointer;
+}    
     
 </style>
 </head>
@@ -311,6 +408,8 @@ button:hover {
 <button class="play play-control" onclick="toggleRadio()">▶</button>
 
 <div class="eq" id="eq">
+<div class="eq" id="eqMain">   <!-- PRO -->
+<div class="eq" id="eqMini">   <!-- player viejo -->
 <span></span><span></span><span></span><span></span>
 </div>
 </div>
@@ -322,7 +421,7 @@ button:hover {
 
 <div class="card">
 <h3>Sonando ahora</h3>
-<p id="trackCard">Cargando...</p>
+<p id="trackMain">Cargando...</p>   <!-- player PRO -->
 </div>
 
 <div class="card">
@@ -376,7 +475,8 @@ button:hover {
 const radio = document.getElementById("radio");
 const controls = document.querySelectorAll(".play-control");
 const status = document.getElementById("status");
-const eq = document.getElementById("eq");
+const eqMain = document.getElementById("eqMain");
+const eqMini = document.getElementById("eqMini");
 const wave = document.getElementById("wave");
 
 let playing = false;
@@ -406,11 +506,13 @@ function updateUI(icon, text){
     if(status) status.textContent = text;
 
     // EQ animación
+   [eqMain, eqMini].forEach(eq=>{
     if(eq){
         eq.querySelectorAll("span").forEach(bar=>{
             bar.style.animationPlayState = playing ? "running" : "paused";
         });
     }
+});
 
     // Wave animación
     if(wave){
@@ -436,7 +538,9 @@ async function getTrack(){
         }
 
         document.getElementById("track").textContent = title || "En vivo 🔴";
-        document.getElementById("trackCard").textContent = title || "En vivo 🔴";
+document.getElementById("trackMain").textContent = title || "En vivo 🔴";
+document.getElementById("trackCard").textContent = title || "En vivo 🔴";
+       
 
     }catch(e){
         document.getElementById("track").textContent = "En vivo 🔴";
