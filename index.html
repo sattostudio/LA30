@@ -201,7 +201,10 @@ footer {
 <div class="main-player">
     <div>
         <h3>LA 30</h3>
-        <p id="nowPlaying">Música sin límites</p>
+        <p>
+<strong id="artistName">LA 30</strong><br>
+<span id="songTitle">En vivo 🔴</span>
+</p>
     </div>
 
     <button class="play-main play-control" onclick="toggleRadio()">▶</button>
@@ -215,7 +218,10 @@ footer {
 <section class="section">
     <h2>Sonando ahora</h2>
     <div class="cards">
-        <div class="card">Track actual</div>
+       <div class="card">
+    <strong id="cardArtist">LA 30</strong><br>
+    <span id="cardTitle">En vivo 🔴</span>
+</div>
         <div class="card">Hip Hop</div>
         <div class="card">Techno</div>
     </div>
@@ -260,5 +266,60 @@ function updateUI(icon, text) {
 }
 </script>
 
+<script>
+async function getNowPlaying() {
+    try {
+        const url = "https://api.allorigins.win/raw?url=" + encodeURIComponent(
+            "https://radio.conectarservidor.com:8006/status-json.xsl"
+        );
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const stream = data.icestats.source;
+
+        let title = "";
+
+        if (Array.isArray(stream)) {
+            title = stream[0].title;
+        } else {
+            title = stream.title;
+        }
+
+        if (title && title.includes("-")) {
+            const parts = title.split("-");
+
+            const artist = parts[0].trim();
+            const song = parts[1].trim();
+
+            // PLAYER PRINCIPAL
+            document.getElementById("artistName").textContent = artist;
+            document.getElementById("songTitle").textContent = song;
+
+            // TARJETA
+            document.getElementById("cardArtist").textContent = artist;
+            document.getElementById("cardTitle").textContent = song;
+
+        } else {
+            document.getElementById("artistName").textContent = "LA 30";
+            document.getElementById("songTitle").textContent = title || "En vivo 🔴";
+
+            document.getElementById("cardArtist").textContent = "LA 30";
+            document.getElementById("cardTitle").textContent = title || "En vivo 🔴";
+        }
+
+        // PLAYER FLOTANTE
+        document.getElementById("statusText").textContent = title || "En vivo 🔴";
+
+    } catch (error) {
+        console.log("Error metadata:", error);
+    }
+}
+
+// refresca cada 10s
+setInterval(getNowPlaying, 10000);
+getNowPlaying();
+</script>
+    
 </body>
 </html>
