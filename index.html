@@ -294,6 +294,11 @@ button:hover {
 <p>Instagram · TikTok · WhatsApp</p>
 </div>
 
+<div class="social-icons">
+    <i class="fa-brands fa-instagram"></i>
+    <i class="fa-brands fa-whatsapp"></i>
+</div>    
+
 </div>
 
 <footer style="text-align:center;padding:20px;color:#666;">
@@ -309,9 +314,6 @@ button:hover {
 
 <button class="play-btn play-control" onclick="toggleRadio()">▶</button>
     <i class="fa-solid fa-play"></i>
-<i class="fa-solid fa-music"></i>
-<i class="fa-brands fa-instagram"></i>
-<i class="fa-brands fa-whatsapp"></i>
 </div>
 
 <script>
@@ -323,16 +325,32 @@ const eq = document.getElementById("eq");
 
 let playing=false;
 
-/* PLAY / PAUSE GLOBAL */
 function toggleRadio(){
-if(!playing){
-radio.play();
-playing=true;
-updateUI('<i class="fa-solid fa-pause"></i>', "Reproduciendo 🔊");
+    if(!playing){
+        radio.play();
+        playing=true;
+        updateUI('<i class="fa-solid fa-pause"></i>', "Reproduciendo 🔊");
+    }else{
+        radio.pause();
+        playing=false;
+        updateUI('<i class="fa-solid fa-play"></i>', "En vivo 🔴");
+    }
+}
+
+function updateUI(icon, text) {
+    controls.forEach(btn => {
+        btn.innerHTML = icon;
+    });
+
+    status.textContent = text;
+
+    eq.querySelectorAll("span").forEach(bar=>{
+        bar.style.animationPlayState = playing ? "running" : "paused";
+    });
 }else{
 radio.pause();
 playing=false;
-updateUI("▶","En vivo 🔴");
+updateUI('<i class="fa-solid fa-play"></i>', "En vivo 🔴");
 }
 }
 
@@ -340,7 +358,7 @@ function updateUI(icon, text) {
     controls.forEach(btn => {
         btn.innerHTML = icon; // 👈 NO textContent
     });
-    statusText.textContent = text;
+    status.textContent = text;
 }
 
 /* METADATA (SI DISPONIBLE) */
