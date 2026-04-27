@@ -242,6 +242,45 @@ button:hover {
 
 <body>
 
+<!-- PLAYER PRO -->
+<div class="pro-player">
+
+    <!-- IZQUIERDA -->
+    <div class="player-left">
+        <div class="wave" id="wave">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div>
+            <strong>LA 30</strong>
+            <p id="track">Cargando...</p>
+        </div>
+    </div>
+
+    <!-- CENTRO -->
+    <div class="player-center">
+        <button class="play-pro play-control" onclick="toggleRadio()">
+            <i class="fa-solid fa-play"></i>
+        </button>
+    </div>
+
+    <!-- DERECHA -->
+    <div class="player-right">
+
+        <i class="fa-solid fa-volume-high"></i>
+
+        <input type="range" min="0" max="1" step="0.01" value="1"
+            oninput="radio.volume = this.value"
+            class="volume-slider">
+
+        <div class="eq" id="eq">
+            <span></span><span></span><span></span><span></span>
+        </div>
+
+    </div>
+
+</div>
+
 <header>
 <h2>LA 30</h2>
 <nav>
@@ -338,12 +377,14 @@ const radio = document.getElementById("radio");
 const controls = document.querySelectorAll(".play-control");
 const status = document.getElementById("status");
 const eq = document.getElementById("eq");
+const wave = document.getElementById("wave");
 
 let playing = false;
 
+/* PLAY / PAUSE GLOBAL */
 function toggleRadio(){
     if(!playing){
-        radio.play();
+        radio.play().catch(()=>{});
         playing = true;
         updateUI('<i class="fa-solid fa-pause"></i>', "Reproduciendo 🔊");
     }else{
@@ -353,16 +394,30 @@ function toggleRadio(){
     }
 }
 
+/* UI GLOBAL */
 function updateUI(icon, text){
+
+    // botones play
     controls.forEach(btn=>{
         btn.innerHTML = icon;
     });
 
-    status.textContent = text;
+    // texto estado
+    if(status) status.textContent = text;
 
-    eq.querySelectorAll("span").forEach(bar=>{
-        bar.style.animationPlayState = playing ? "running" : "paused";
-    });
+    // EQ animación
+    if(eq){
+        eq.querySelectorAll("span").forEach(bar=>{
+            bar.style.animationPlayState = playing ? "running" : "paused";
+        });
+    }
+
+    // Wave animación
+    if(wave){
+        wave.querySelectorAll("span").forEach(bar=>{
+            bar.style.animationPlayState = playing ? "running" : "paused";
+        });
+    }
 }
 
 /* METADATA */
@@ -371,10 +426,17 @@ async function getTrack(){
         const res = await fetch("https://radio.conectarservidor.com:8006/status-json.xsl");
         const data = await res.json();
 
-        let title = data.icestats.source.title;
+        let source = data.icestats.source;
+        let title = "";
 
-        document.getElementById("track").textContent = title;
-        document.getElementById("trackCard").textContent = title;
+        if(Array.isArray(source)){
+            title = source[0].title;
+        }else{
+            title = source.title;
+        }
+
+        document.getElementById("track").textContent = title || "En vivo 🔴";
+        document.getElementById("trackCard").textContent = title || "En vivo 🔴";
 
     }catch(e){
         document.getElementById("track").textContent = "En vivo 🔴";
@@ -388,3 +450,5 @@ getTrack();
 
 </body>
 </html>
+
+
