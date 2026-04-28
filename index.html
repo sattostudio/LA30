@@ -273,14 +273,49 @@ background:linear-gradient(90deg,#ff7a00,#ff3b00);
 }
 
 /* IMAGEN PROGRAMA */
+.program-item{
+display:flex;
+align-items:center;
+gap:12px;
+margin:14px 0;
+}
+
+/* HORAS BASE */
+.time{
+font-size:12px;
+font-weight:600;
+min-width:110px;
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* DEGRADADO INTERCALADO */
+.program-item:nth-child(1) .time{
+background:linear-gradient(90deg,#00f0ff,#00c3ff);
+}
+
+.program-item:nth-child(2) .time{
+background:linear-gradient(90deg,#ff00c8,#ff7a00);
+}
+
+.program-item:nth-child(3) .time{
+background:linear-gradient(90deg,#00f0ff,#ff00c8);
+}
+
+.program-item:nth-child(4) .time{
+background:linear-gradient(90deg,#ff7a00,#ff3b00);
+}
+
+/* IMAGEN */
 .program-item img{
-width:40px;
-height:40px;
-border-radius:8px;
+width:42px;
+height:42px;
+border-radius:10px;
 object-fit:cover;
 }
 
-/* NOMBRE PROGRAMA */
+/* TEXTO */
 .program-item p{
 margin:0;
 font-size:14px;
@@ -362,27 +397,27 @@ oninput="radio.volume = this.value" class="volume-slider">
 <h3>Programación</h3>
 
 <div class="program-item">
-<span class="time">08:00 - 10:00</span>
-<img src="prog1.jpg">
-<p>Morning Flow</p>
+    <span class="time">08:00 - 10:00</span>
+    <img src="prog1.jpg">
+    <p>Morning Flow</p>
 </div>
 
 <div class="program-item">
-<span class="time">12:00 - 14:00</span>
-<img src="prog2.jpg">
-<p>Midday Beats</p>
+    <span class="time">12:00 - 14:00</span>
+    <img src="prog2.jpg">
+    <p>Midday Beats</p>
 </div>
 
 <div class="program-item">
-<span class="time">16:00 - 19:00</span>
-<img src="prog3.jpg">
-<p>Afternoon Vibes</p>
+    <span class="time">16:00 - 19:00</span>
+    <img src="prog3.jpg">
+    <p>Afternoon Vibes</p>
 </div>
 
 <div class="program-item">
-<span class="time">20:00 - 23:00</span>
-<img src="prog4.jpg">
-<p>Night Session</p>
+    <span class="time">20:00 - 23:00</span>
+    <img src="prog4.jpg">
+    <p>Night Session</p>
 </div>
 
 </div>
