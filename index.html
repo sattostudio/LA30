@@ -508,6 +508,7 @@ function updateProgramImage(){
 const hour = new Date().getHours();
 const img = document.getElementById("programImage");
 
+// PROGRAMACIÓN
 if(hour >= 8 && hour < 10){
     img.src = "prog1.jpg";
 }
@@ -520,11 +521,13 @@ else if(hour >= 16 && hour < 19){
 else if(hour >= 20 && hour < 23){
     img.src = "prog4.jpg";
 }
+
+// FUERA DE PROGRAMACIÓN
 else{
-    img.src = "default.jpg"; // opcional fuera de horario
+    img.src = "default.jpg";
 }
 
-} 
+}
  
 function updateUI(icon){
 controls.forEach(btn=>{
