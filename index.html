@@ -552,36 +552,14 @@ const res = await fetch("https://radio.conectarservidor.com:8006/status-json.xsl
 const data = await res.json();
 
 let source = data.icestats.source;
-        if(Array.isArray(source)) source = source[0];
+let title = Array.isArray(source) ? source[0].title : source.title;
 
-        let rawTitle = source.title || "";
-        let artist = "LA 30";
-        let track = rawTitle;
+document.getElementById("track").textContent = title || "En vivo 🔴";
+document.getElementById("trackCard").textContent = title || "En vivo 🔴";
 
-        // separar artista - canción
-        if(rawTitle.includes(" - ")){
-            let parts = rawTitle.split(" - ");
-            artist = parts[0];
-            track = parts[1];
-        }
-
-        // actualizar UI
-        document.getElementById("track").textContent = track || "En vivo 🔴";
-        document.getElementById("trackCard").textContent = track || "En vivo 🔴";
-
-        // 👉 OPCIONAL (si quieres mostrar artista)
-        const artistEl = document.getElementById("artist");
-        if(artistEl) artistEl.textContent = artist;
-
-        // 👉 DATOS EXTRA (tipo SonicPanel)
-        const listeners = source.listeners || 0;
-
-        const listenersEl = document.getElementById("listeners");
-        if(listenersEl) listenersEl.textContent = listeners + " oyentes";
-
-    }catch(e){
-        document.getElementById("track").textContent = "En vivo 🔴";
-    }
+}catch{
+document.getElementById("track").textContent = "En vivo 🔴";
+}
 }
 
 setInterval(getTrack,10000);
